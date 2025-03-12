@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thiagocarvalho\\Documents\\Digix\\Desafio-6\\FarmacySystem\\FarmacySystem.csproj": {}
+    "C:\\Users\\leandrocandido\\Desktop\\Desafio-6\\FarmacySystem\\FarmacySystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thiagocarvalho\\Documents\\Digix\\Desafio-6\\FarmacySystem\\FarmacySystem.csproj": {
+    "C:\\Users\\leandrocandido\\Desktop\\Desafio-6\\FarmacySystem\\FarmacySystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thiagocarvalho\\Documents\\Digix\\Desafio-6\\FarmacySystem\\FarmacySystem.csproj",
+        "projectUniqueName": "C:\\Users\\leandrocandido\\Desktop\\Desafio-6\\FarmacySystem\\FarmacySystem.csproj",
         "projectName": "FarmacySystem",
-        "projectPath": "C:\\Users\\thiagocarvalho\\Documents\\Digix\\Desafio-6\\FarmacySystem\\FarmacySystem.csproj",
-        "packagesPath": "C:\\Users\\thiagocarvalho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thiagocarvalho\\Documents\\Digix\\Desafio-6\\FarmacySystem\\obj\\",
+        "projectPath": "C:\\Users\\leandrocandido\\Desktop\\Desafio-6\\FarmacySystem\\FarmacySystem.csproj",
+        "packagesPath": "C:\\Users\\leandrocandido\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\leandrocandido\\Desktop\\Desafio-6\\FarmacySystem\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\thiagocarvalho\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\leandrocandido\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
