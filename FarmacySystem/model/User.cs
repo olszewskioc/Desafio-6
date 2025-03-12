@@ -19,9 +19,9 @@ namespace FarmacySystem.model
         [Required]
         public string Role { get; set; } = string.Empty;
 
-        [Column("login")]
+        [Column("cpf")]
         [Required]
-        public string Login { get; set; } = string.Empty;
+        public string Cpf { get; set; } = string.Empty;
 
         [Column("password")]
         [Required]
