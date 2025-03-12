@@ -1,3 +1,7 @@
+# Sistema Farmácia
+
+## IMPORTANTE: ALTERAR PASSWORD NO APPSETTINGS.JSON
+
 ## Tipos de Commits
 
 ### `feat` - Nova funcionalidade
