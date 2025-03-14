@@ -129,5 +129,27 @@ namespace FarmacySystem.controller
                 Console.WriteLine($"ERROR: {ex.Message}");
             }
         }
+
+        public (bool, string) LoginUser(string cpf, string password)
+        {
+            try
+            {
+                using (var db = new AppDbContext())
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Cpf.Equals(cpf)) ?? throw new Exception($"Unable to find login {cpf}");
+                    return (user != null && user.Password == password, $"{user!.Role.ToLower()}");
+                }
+            }
+            catch (NpgsqlException ex)
+            {
+                Console.WriteLine($"ERROR DB: {ex.Message}");
+                return (false, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"ERROR: {ex.Message}");
+                return (false, string.Empty);
+            }
+        }
     }
 }
