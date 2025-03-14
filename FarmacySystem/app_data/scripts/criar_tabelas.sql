@@ -1,68 +1,68 @@
-create table suppliers (
-	id serial primary key not null,
-	name varchar(255),
-	cnpj varchar(14),
-	phone varchar(16),
-	zip_code varchar(8),
-	number int
+CREATE TABLE suppliers (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255),
+    cnpj VARCHAR(14),
+    phone VARCHAR(16),
+    zip_code VARCHAR(8),
+    number INT
 );
 
-create table medicines (
-	id serial primary key not null,
-	name varchar(255),
-	description text,
-	type varchar(255),
-	price decimal(10,2),
-	expiration_date date
+CREATE TABLE medicines (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255),
+    description TEXT,
+    type VARCHAR(255),
+    price DECIMAL(10,2),
+    expiration_date DATE
 );
 
-create table suppliers_medicines(
-	id serial primary key not null,
-	supplier_id int not null,
-	medicine_id int not null,
-	foreign key (supplier_id) references suppliers(id),
-	foreign key (medicine_id) references medicines(id)
+CREATE TABLE suppliers_medicines (
+    id SERIAL PRIMARY KEY NOT NULL,
+    supplier_id INT NOT NULL,
+    medicine_id INT NOT NULL,
+    FOREIGN KEY (supplier_id) REFERENCES suppliers(id) ON DELETE CASCADE,
+    FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE
 );
 
-create table stocks(
-	id serial primary key not null,
-	quantity int,
-	updated_at timestamp default current_timestamp,
-	medicine_id int not null,
-	foreign key (medicine_id) references medicines(id)
+CREATE TABLE stocks (
+    id SERIAL PRIMARY KEY NOT NULL,
+    quantity INT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    medicine_id INT NOT NULL,
+    FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE
 );
 
-create table sales(
-	id serial primary key not null,
-	customer varchar(255),
-	sale_date date,
-	total_value decimal(10,2),
-	user_id int not null,
-	foreign key (user_id) references users(id)
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name VARCHAR(255),
+    role VARCHAR(255),
+    cpf VARCHAR(18),
+    password VARCHAR(255)
 );
 
-create table sales_medicines(
-	id serial primary key not null,
-	quantity int,
-	sale_id int not null,
-	stock_id int not null,
-	foreign key (sale_id) references sales(id),
-	foreign key (stock_id) references stocks(id)
+CREATE TABLE sales (
+    id SERIAL PRIMARY KEY NOT NULL,
+    customer VARCHAR(255),
+    sale_date DATE,
+    total_value DECIMAL(10,2),
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-create table users (
-	id serial primary key not null,
-	name varchar(255),
-	role varchar(255),
-	cpf varchar(18),
-	password varchar(255)
+CREATE TABLE sales_medicines (
+    id SERIAL PRIMARY KEY NOT NULL,
+    quantity INT,
+	controlled boolean,
+    sale_id INT NOT NULL,
+    stock_id INT NOT NULL,
+    FOREIGN KEY (sale_id) REFERENCES sales(id) ON DELETE CASCADE,
+    FOREIGN KEY (stock_id) REFERENCES stocks(id) ON DELETE CASCADE
 );
 
-create table reports(
-	id serial primary key not null,
-	description text,
-	created_at timestamp default current_timestamp,
-	user_id int not null,
-	foreign key (user_id) references users(id)
+CREATE TABLE reports (
+    id SERIAL PRIMARY KEY NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
