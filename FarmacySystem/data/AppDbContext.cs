@@ -19,7 +19,7 @@ namespace FarmacySystem.data
         {
              var config = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json")
+            .AddJsonFile("appsetting.json")
             .Build();
 
             optionsBuilder.UseNpgsql(config.GetConnectionString("PostgresConnection"));
