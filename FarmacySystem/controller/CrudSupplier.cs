@@ -38,7 +38,6 @@ namespace FarmacySystem.controller
                 var supplier = db.Suppliers.Find(id);
                 if (supplier != null)
                 {
-                    supplier.Id = id;
                     supplier.Name = name;
                     supplier.Cnpj = cnpj;
                     supplier.Phone = phone;

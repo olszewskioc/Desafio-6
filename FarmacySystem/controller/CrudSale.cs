@@ -38,7 +38,6 @@ namespace FarmacySystem.controller
                 var sale = db.Sales.Find(id);
                 if (sale != null)
                 {
-                    sale.Id = id;
                     sale.Customer = customer;
                     sale.SaleDate = sale_date;
                     sale.TotalValue = total_value;
