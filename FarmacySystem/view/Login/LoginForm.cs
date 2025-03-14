@@ -1,11 +1,13 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using FarmacySystem.controller;
 
-namespace FarmacySystem
+namespace FarmacySystem.view
 {
     public class LoginForm : Form
     {
+        private MainForm mainForm;
         private Panel headerPanel = null!;
         private Label lblHeader = null!;
         private Label lblLogin = null!;
@@ -13,11 +15,15 @@ namespace FarmacySystem
         private Label lblSenha = null!;
         private TextBox txtSenha = null!;
         private Button btnEnviar = null!;
+        private CrudUser crudUser;
 
-        public LoginForm()
+        public LoginForm(MainForm form)
         {
             InitializeComponent();
-            this.Resize += new EventHandler(ResizeForm); // Evento para ajustar a responsividade
+            mainForm = form;
+            this.Resize += new EventHandler(ResizeForm); 
+            crudUser = new CrudUser();
+            btnEnviar.Click += new EventHandler(BtnEnviar_Click);
         }
 
         private void InitializeComponent()
@@ -117,6 +123,34 @@ namespace FarmacySystem
             lblSenha.Location = new Point(centerX - lblSenha.Width / 2, startY + 80);
             txtSenha.Location = new Point(centerX - txtSenha.Width / 2, startY + 110);
             btnEnviar.Location = new Point(centerX - btnEnviar.Width / 2, startY + 170);
+        }
+
+        private void BtnEnviar_Click(object sender, EventArgs e)
+        {
+            try 
+            {
+
+                (bool success, string role) = crudUser.LoginUser(txtLogin.Text, txtSenha.Text);
+
+                if (success == true)
+                {
+                    Form telaUsuario = role switch
+                {
+                    "gerente" => new ManagerForm(),
+                    "farmaceutico" => new FarmaceuticForm(),
+                    _ => new SalesmanForm()
+                };
+
+                mainForm.TrocarTela(telaUsuario);
+                    
+                } else
+                {
+                    MessageBox.Show("Erro ao realizar login", role);
+                }
+            } catch(Exception ex)
+            {
+                MessageBox.Show("Erro no forms", ex.Message);
+            }
         }
     }
 }
