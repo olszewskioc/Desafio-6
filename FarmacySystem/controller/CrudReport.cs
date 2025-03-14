@@ -26,21 +26,21 @@ namespace FarmacySystem.controller
                 var Report = db.Reports.ToList();
                 foreach (var reports in Report)
                 {
-                    ReportList.Add($"Id: {reports.Id} Descrição: {reports.Description} data de criação: {reports.CreatedAt} Usuario: {reports.UserId}");
+                    ReportList.Add($"{reports.Id}{reports.Description}{reports.CreatedAt}{reports.UserId}");
                 }
             }
             return ReportList;
         }
-        public void ReportsUpdate(int id, string description, DateTime createdAt, int userId)
+        public void ReportsUpdate(int id, string? description = null, DateTime? createdAt = null, int? userId = null)
         {
             using (var db = new AppDbContext())
             {
                 var report = db.Reports.Find(id);
                 if (report != null)
                 {
-                    report.Description = description;
-                    report.CreatedAt = createdAt;
-                    report.UserId = userId;
+                    report.Description = description ?? report.Description;
+                    report.CreatedAt = createdAt ?? report.CreatedAt;
+                    report.UserId = userId ?? report.UserId;
                     db.SaveChanges();
                     System.Console.WriteLine("Relatório atualizado com sucesso");
                 }

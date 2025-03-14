@@ -26,22 +26,22 @@ namespace FarmacySystem.controller
                 var sales = db.Sales.ToList();
                 foreach (var sale in sales)
                 {
-                    SalesList.Add($"Id: {sale.Id} Cliente: {sale.Customer} Data da venda: {sale.SaleDate} valor total: {sale.TotalValue} Usuario: {sale.SalesmanId}");
+                    SalesList.Add($"{sale.Id}{sale.Customer}{sale.SaleDate}{sale.TotalValue}{sale.SalesmanId}");
                 }
             }
             return SalesList;
         }
-        public void SalesUpdate(int id, string customer, DateTime sale_date, decimal total_value, int salesman_id)
+        public void SalesUpdate(int id, string? customer = null, DateTime? sale_date = null, decimal? total_value = null, int? salesman_id = null)
         {
             using (var db = new AppDbContext())
             {
                 var sale = db.Sales.Find(id);
                 if (sale != null)
                 {
-                    sale.Customer = customer;
-                    sale.SaleDate = sale_date;
-                    sale.TotalValue = total_value;
-                    sale.SalesmanId = salesman_id;
+                    sale.Customer = customer ?? sale.Customer;
+                    sale.SaleDate = sale_date ?? sale.SaleDate;
+                    sale.TotalValue = total_value ?? sale.TotalValue;
+                    sale.SalesmanId = salesman_id ?? sale.SalesmanId;
                     db.SaveChanges();
                     System.Console.WriteLine("Venda atualizada com sucesso");
                 }

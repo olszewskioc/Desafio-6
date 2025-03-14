@@ -26,21 +26,21 @@ namespace FarmacySystem.controller
                 var saleMedicine = db.SaleMedicines.ToList();
                 foreach (var saleMedicines in saleMedicine)
                 {
-                    SaleMedicinetList.Add($"Id: {saleMedicines.Id} Id do estoque: {saleMedicines.StockId} Id da venda: {saleMedicines.MedicineId} Quantidade: {saleMedicines.Quantity}");
+                    SaleMedicinetList.Add($"{saleMedicines.Id}{saleMedicines.StockId}{saleMedicines.MedicineId}{saleMedicines.Quantity}");
                 }
             }
             return SaleMedicinetList;
         }
-        public void SaleMedicineUpdate(int id, int stockid, int medicineId, int quantity)
+        public void SaleMedicineUpdate(int id, int? stockid = null, int? medicineId = null, int? quantity = null)
         {
             using (var db = new AppDbContext())
             {
                 var saleMedicine = db.SaleMedicines.Find(id);
                 if (saleMedicine != null)
                 {
-                    saleMedicine.StockId = stockid;
-                    saleMedicine.MedicineId = medicineId;
-                    saleMedicine.Quantity = quantity;
+                    saleMedicine.StockId = stockid ?? saleMedicine.StockId;
+                    saleMedicine.MedicineId = medicineId ?? saleMedicine.MedicineId;
+                    saleMedicine.Quantity = quantity ?? saleMedicine.Quantity;
                     db.SaveChanges();
                     System.Console.WriteLine("Venda_Medicamento atualizado com sucesso");
                 }

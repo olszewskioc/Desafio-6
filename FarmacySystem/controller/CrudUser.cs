@@ -60,7 +60,7 @@ namespace FarmacySystem.controller
                     
                     foreach (var user in users)
                     {
-                        // string linha  = $"ID: {user.Id} | NAME: {user.Name} | ROLE: {user.Role} | CPF: {user.Cpf} | PASSWORD: {user.Password}";
+                        string linha  = $"{user.Id}{user.Name}{user.Role}{user.Cpf}{user.Password}";
                         result.Add(user);
                     }
                     return result;
