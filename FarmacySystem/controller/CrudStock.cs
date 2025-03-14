@@ -31,16 +31,16 @@ namespace FarmacySystem.controller
             }
             return StockList;
         }
-        public void StockUpdate(int id, int quantity, DateTime updatedAt, int medicineId)
+        public void StockUpdate(int id, int? quantity = null, DateTime? updatedAt = null, int? medicineId = null)
         {
             using (var db = new AppDbContext())
             {
                 var stock = db.Stocks.Find(id);
                 if (stock != null)
                 {
-                    stock.Quantity = quantity;
-                    stock.UpdatedAt = updatedAt;
-                    stock.MedicineId = medicineId;
+                    stock.Quantity = quantity ?? stock.Quantity;
+                    stock.UpdatedAt = updatedAt ?? stock.UpdatedAt;
+                    stock.MedicineId = medicineId ?? stock.MedicineId;
                     db.SaveChanges();
                     System.Console.WriteLine("Estoque atualizado com sucesso");
                 }

@@ -31,18 +31,18 @@ namespace FarmacySystem.controller
             }
             return MedicineList;
         }
-        public void MedicinesUpdate(int id, string Newname, string Newdescription, string Newtype, decimal Newprice, DateTime Newexpiration_date)
+        public void MedicinesUpdate(int id, string? Newname = null, string? Newdescription = null, string? Newtype = null, decimal? Newprice = null, DateTime? Newexpiration_date = null)
         {
             using (var db = new AppDbContext())
             {
                 var medicine = db.Medicines.Find(id);
                 if (medicine != null)
                 {
-                    medicine.Name = Newname;
-                    medicine.Description = Newdescription;
-                    medicine.Type = Newtype;
-                    medicine.Price = Newprice;
-                    medicine.ExpirationDate = Newexpiration_date;
+                    medicine.Name = Newname ?? medicine.Name;
+                    medicine.Description = Newdescription ?? medicine.Description;
+                    medicine.Type = Newtype ?? medicine.Type;
+                    medicine.Price = Newprice ?? medicine.Price;
+                    medicine.ExpirationDate = Newexpiration_date ?? medicine.ExpirationDate;
                     db.SaveChanges();
                     System.Console.WriteLine("Medicamento atualizado com sucesso");
                 }

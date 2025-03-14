@@ -31,18 +31,18 @@ namespace FarmacySystem.controller
             }
             return SuppliersList;
         }
-        public void SuppliersUpdate(int id, string name, string cnpj, string phone, string zip_code, int number)
+        public void SuppliersUpdate(int id, string? name = null, string? cnpj = null, string? phone = null, string? zip_code = null, int? number = null)
         {
             using (var db = new AppDbContext())
             {
                 var supplier = db.Suppliers.Find(id);
                 if (supplier != null)
                 {
-                    supplier.Name = name;
-                    supplier.Cnpj = cnpj;
-                    supplier.Phone = phone;
-                    supplier.ZipCode = zip_code;
-                    supplier.Number = number;
+                    supplier.Name = name ?? supplier.Name;
+                    supplier.Cnpj = cnpj ?? supplier.Cnpj;
+                    supplier.Phone = phone ?? supplier.Phone;
+                    supplier.ZipCode = zip_code ?? supplier.ZipCode;
+                    supplier.Number = number ?? supplier.Number;
                     db.SaveChanges();
                     System.Console.WriteLine("Fornecedor atualizado com sucesso");
                 }

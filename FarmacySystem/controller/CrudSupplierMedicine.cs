@@ -31,15 +31,15 @@ namespace FarmacySystem.controller
             }
             return SupplierMedicineList;
         }
-        public void SupplierMedicineUpdate(int id, int supplierId, int medicineId)
+        public void SupplierMedicineUpdate(int id, int? supplierId = null, int? medicineId = null)
         {
             using (var db = new AppDbContext())
             {
                 var supplierMedicine = db.SupplierMedicines.Find(id);
                 if (supplierMedicine != null)
                 {
-                    supplierMedicine.SupplierId = supplierId;
-                    supplierMedicine.MedicineId = medicineId;
+                    supplierMedicine.SupplierId = supplierId ?? supplierMedicine.SupplierId;
+                    supplierMedicine.MedicineId = medicineId ?? supplierMedicine.MedicineId;
                     db.SaveChanges();
                     System.Console.WriteLine("Fornecedor_medicamento atualizado com sucesso");
                 }
