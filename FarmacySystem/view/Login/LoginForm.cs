@@ -17,7 +17,7 @@ namespace FarmacySystem
         public LoginForm()
         {
             InitializeComponent();
-            this.Resize += new EventHandler(ResizeForm); 
+            this.Resize += new EventHandler(ResizeForm); // Evento para ajustar a responsividade
         }
 
         private void InitializeComponent()
