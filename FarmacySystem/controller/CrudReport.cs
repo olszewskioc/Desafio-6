@@ -26,7 +26,7 @@ namespace FarmacySystem.controller
                 var Report = db.Reports.ToList();
                 foreach (var reports in Report)
                 {
-                    ReportList.Add($"Id: {reports.Id} Descrição: {reports.Description} data de criação: {reports.CreatedAt} Usuario: {reports.UserId}");
+                    ReportList.Add($"{reports.Id}{reports.Description}{reports.CreatedAt}{reports.UserId}");
                 }
             }
             return ReportList;

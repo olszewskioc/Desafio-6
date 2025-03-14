@@ -26,7 +26,7 @@ namespace FarmacySystem.controller
                 var Stock = db.Stocks.ToList();
                 foreach (var stocks in Stock)
                 {
-                    StockList.Add($"Id: {stocks.Id} Quatidade: {stocks.Quantity} Data de criação: {stocks.UpdatedAt} Id do medicamento: {stocks.MedicineId} ");
+                    StockList.Add($"{stocks.Id}{stocks.Quantity}{stocks.UpdatedAt}{stocks.MedicineId}");
                 }
             }
             return StockList;

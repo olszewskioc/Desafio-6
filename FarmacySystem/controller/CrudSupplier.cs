@@ -26,7 +26,7 @@ namespace FarmacySystem.controller
                 var suppliers = db.Suppliers.ToList();
                 foreach (var supplier in suppliers)
                 {
-                    SuppliersList.Add($"Id: {supplier.Id} Nome: {supplier.Name} Cnpj: {supplier.Cnpj} Telefone: {supplier.Phone} Cep: {supplier.ZipCode} numero: {supplier.Number}");
+                    SuppliersList.Add($"{supplier.Id}{supplier.Name}{supplier.Cnpj}{supplier.Phone}{supplier.ZipCode}{supplier.Number}");
                 }
             }
             return SuppliersList;

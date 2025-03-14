@@ -26,7 +26,7 @@ namespace FarmacySystem.controller
                 var sales = db.Sales.ToList();
                 foreach (var sale in sales)
                 {
-                    SalesList.Add($"Id: {sale.Id} Cliente: {sale.Customer} Data da venda: {sale.SaleDate} valor total: {sale.TotalValue} Usuario: {sale.SalesmanId}");
+                    SalesList.Add($"{sale.Id}{sale.Customer}{sale.SaleDate}{sale.TotalValue}{sale.SalesmanId}");
                 }
             }
             return SalesList;

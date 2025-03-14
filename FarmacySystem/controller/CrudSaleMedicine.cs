@@ -26,7 +26,7 @@ namespace FarmacySystem.controller
                 var saleMedicine = db.SaleMedicines.ToList();
                 foreach (var saleMedicines in saleMedicine)
                 {
-                    SaleMedicinetList.Add($"Id: {saleMedicines.Id} Id do estoque: {saleMedicines.StockId} Id da venda: {saleMedicines.MedicineId} Quantidade: {saleMedicines.Quantity}");
+                    SaleMedicinetList.Add($"{saleMedicines.Id}{saleMedicines.StockId}{saleMedicines.MedicineId}{saleMedicines.Quantity}");
                 }
             }
             return SaleMedicinetList;

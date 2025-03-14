@@ -26,7 +26,7 @@ namespace FarmacySystem.controller
                 var medicines = db.Medicines.ToList();
                 foreach (var medicine in medicines)
                 {
-                    MedicineList.Add($"Id: {medicine.Id} Nome: {medicine.Name} Descrição: {medicine.Description} Tipo: {medicine.Type} Preço: {medicine.Price} Data de validade: {medicine.ExpirationDate}");
+                    MedicineList.Add($"{medicine.Id}{medicine.Name}{medicine.Description}{medicine.Type}{medicine.Price}{medicine.ExpirationDate}");
                 }
             }
             return MedicineList;
