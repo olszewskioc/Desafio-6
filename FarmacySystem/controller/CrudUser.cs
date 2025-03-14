@@ -142,12 +142,12 @@ namespace FarmacySystem.controller
             catch (NpgsqlException ex)
             {
                 Console.WriteLine($"ERROR DB: {ex.Message}");
-                return (false, string.Empty);
+                return (false, ex.Message);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"ERROR: {ex.Message}");
-                return (false, string.Empty);
+                return (false, ex.Message);
             }
         }
     }
