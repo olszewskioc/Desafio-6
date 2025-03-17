@@ -4,8 +4,9 @@ using System.Windows.Forms;
 using FarmacySystem.controller;
 using System.Collections.Generic;
 using System.Linq;
+using FarmacySystem.model;
 
-namespace FarmacySystem.model
+namespace FarmacySystem.view
 {
     public class FarmaceuticoForm : Form
     {

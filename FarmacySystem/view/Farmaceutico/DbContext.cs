@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-namespace FarmacySystem.model
+using FarmacySystem.model;
+namespace FarmacySystem.view
 {
     public class YourDbContext : DbContext
     {

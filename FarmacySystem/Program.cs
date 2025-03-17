@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using FarmacySystem.view;
 
-namespace FarmacySystem.view.Farmaceutico
+namespace FarmacySystem.view
 {
     static class Program
     {
