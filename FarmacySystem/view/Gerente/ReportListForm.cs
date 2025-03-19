@@ -9,15 +9,18 @@ namespace FarmacySystem.view
 {
     public class ReportListForm : Form
 {
+    private MainForm mainForm;
     private Panel headerPanel = null!;
     private Label lblHeader = null!;
     private DataGridView dgvReports = null!;
     private Button btnAtualizar = null!;
+    private Button btnVoltar = null!;
     private CrudReport crudReport;
     private Panel scrollablePanel = null!; // Painel com rolagem
 
-    public ReportListForm()
+    public ReportListForm(MainForm mainForm)
     {
+        this.mainForm = mainForm;
         crudReport = new CrudReport();
         InitializeComponent();
         this.Resize += new EventHandler(ResizeForm);
@@ -84,8 +87,21 @@ namespace FarmacySystem.view
             Font = new Font("Arial", 12F, FontStyle.Bold),
             Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right // Fixa o botão na parte inferior
         };
+        // Botão de voltar
+        btnVoltar = new Button
+        {
+            Text = "Voltar",
+            Size = new Size(120, 35),
+            BackColor = Color.OrangeRed,
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Font = new Font("Arial", 12F, FontStyle.Bold),
+            Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right // Fixa o botão na parte inferior
+        };
         btnAtualizar.Click += new EventHandler(BtnAtualizar_Click);
+        btnVoltar.Click += new EventHandler(BtnVoltar_Click);
         scrollablePanel.Controls.Add(btnAtualizar); // Adiciona ao painel rolável
+        scrollablePanel.Controls.Add(btnVoltar); // Adiciona ao painel rolável
 
         ResizeForm(null, null); // Inicializa o layout
     }
@@ -134,6 +150,11 @@ namespace FarmacySystem.view
     private void BtnAtualizar_Click(object sender, EventArgs e)
     {
         CarregarReports();
+    }
+
+    private void BtnVoltar_Click (object sender, EventArgs e)
+    {
+        mainForm.TrocarTela(new ManagerForm(mainForm));
     }
 }
 
