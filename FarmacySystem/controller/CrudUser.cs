@@ -15,6 +15,7 @@ namespace FarmacySystem.controller
         {
            try
             {
+                role = role.ToLower();
                 if (role != "farmaceutico" && role != "gerente" && role != "atendente")
                     throw new Exception($"Invalid Role for User: {role}\nOnly can be: farmaceutico, gerente or atendente");
                 using (var db = new AppDbContext())
@@ -69,13 +70,13 @@ namespace FarmacySystem.controller
             catch (NpgsqlException ex)
             {
                 Console.WriteLine($"ERROR DB: {ex.Message}");
-                return null;
+                return new List<User>();
                 
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"ERROR: {ex.Message}");
-                return null;
+                return new List<User>();
             }
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using FarmacySystem.controller;
@@ -9,152 +10,149 @@ namespace FarmacySystem.view
     {
         private MainForm mainForm;
         private CrudUser crudUser;
-        private Panel headerPanel = null!;
-        private Label lblHeader = null!;
-        private Label lblNome = null!;
-        private TextBox txtNome = null!;
-        private Label lblCargo = null!;
-        private ComboBox cmbCargo = null!;
-        private Label lblLogin = null!;
-        private TextBox txtLogin = null!;
-        private Label lblSenha = null!;
-        private TextBox txtSenha = null!;
-        private Button btnVoltar = null!;
-        private Button btnEnviar = null!;
+        private Panel panelCadastro, panelUsuarios;
+        private DataGridView dgvUsuarios;
+        private Button btnVoltar, btnEnviar, btnAtualizar, btnDeletar;
+        private TextBox txtNome, txtLogin, txtSenha;
+        private ComboBox cmbCargo;
+        private TableLayoutPanel tableLayoutPanel;
 
-        public FormCadastro(MainForm mainform)
+        public FormCadastro(MainForm mainForm)
         {
             InitializeComponent();
-            this.mainForm = mainform;
+            this.mainForm = mainForm;
             this.crudUser = new CrudUser();
-            this.Resize += new EventHandler(ResizeForm);
+            CarregarUsuarios();
         }
 
         private void InitializeComponent()
         {
-            this.Text = "Cadastro - DigiMed Pharmacy";
-            this.Size = new Size(600, 700);
-            this.MinimumSize = new Size(500, 500);
+            this.Text = "Usuários - DigiMed Pharmacy";
+            this.Size = new Size(800, 700);
+            this.MinimumSize = new Size(800, 500);
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.BackColor = Color.FromArgb(180, 180, 251);
 
-            // Painel de cabeçalho
-            headerPanel = new Panel
+            // Criar o TableLayoutPanel
+            tableLayoutPanel = new TableLayoutPanel
             {
-                Dock = DockStyle.Top,
-                Height = 60,
-                BackColor = Color.FromArgb(75, 0, 110)
-            };
-            this.Controls.Add(headerPanel);
-
-            lblHeader = new Label
-            {
-                Text = "DigiMed Pharmacy - Cadastro",
-                ForeColor = Color.White,
-                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
+                RowCount = 1,
+                ColumnCount = 2,
+                Dock = DockStyle.Fill,
+                Padding = new Padding(10),
                 AutoSize = true
             };
-            headerPanel.Controls.Add(lblHeader);
 
-            lblNome = CreateLabel("Nome");
-            txtNome = CreateTextBox();
-            lblCargo = CreateLabel("Cargo");
-            cmbCargo = CreateComboBox();
-            cmbCargo.Items.AddRange(["Gerente", "Farmaceutico", "Vendedor"]);
-            lblLogin = CreateLabel("Login (CPF)");
-            txtLogin = CreateTextBox();
-            lblSenha = CreateLabel("Senha");
-            txtSenha = CreateTextBox();
+            // Definir o comportamento das colunas
+            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+
+            // Criar os painéis
+            panelCadastro = new Panel { Dock = DockStyle.Fill };
+            panelUsuarios = new Panel { Dock = DockStyle.Fill, Margin = new Padding(10) };
+
+            // Componentes do Formulário - Panel Cadastro
+            panelCadastro.Controls.AddRange(new Control[] {
+                CreateLabel("Nome", new Point(20, 20)), txtNome = CreateTextBox(new Point(20, 50)),
+                CreateLabel("Cargo", new Point(20, 90)), cmbCargo = CreateComboBox(new Point(20, 120)),
+                CreateLabel("Login (CPF)", new Point(20, 160)), txtLogin = CreateTextBox(new Point(20, 190)),
+                CreateLabel("Senha", new Point(20, 230)), txtSenha = CreateTextBox(new Point(20, 260)),
+                btnVoltar = CreateButton("Voltar", Color.FromArgb(255, 102, 102), (s, e) => mainForm.TrocarTela(new ManagerForm(mainForm))),
+                btnEnviar = CreateButton("Enviar", Color.FromArgb(75, 0, 110), (s, e) => EnviarUsuario()),
+                btnAtualizar = CreateButton("Atualizar", Color.FromArgb(255, 165, 0), (s, e) => AtualizarUsuario()),
+            btnDeletar = CreateButton("Deletar", Color.FromArgb(255, 0, 0), (s, e) => DeletarUsuario())
+            });
+            btnVoltar.Location = new Point(20, 310);
+            btnEnviar.Location = new Point(150, 310);
+            btnAtualizar.Location = new Point(20, 390);
+            btnDeletar.Location = new Point(150, 390);
+            cmbCargo.Items.AddRange(["Gerente", "Farmaceutico", "Atendente"]);
             txtSenha.PasswordChar = '*';
 
-            btnVoltar = CreateButton("Voltar", Color.FromArgb(255, 102, 102), (s, e) => mainForm.TrocarTela(new ManagerForm(mainForm)));
-            btnEnviar = CreateButton("Enviar", Color.FromArgb(75, 0, 110), (s, e) =>
-            {
-                try
-                {
-                    crudUser.InsertUser(txtNome.Text, cmbCargo.Text, txtLogin.Text, txtSenha.Text);
-                    MessageBox.Show("Cadastro efetuado com sucesso!", "Sucesso");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Falha no cadastro!\n{ex.Message}", "Erro");
-                }
-                
-                mainForm.TrocarTela(new ManagerForm(mainForm));
-            });
+            // DataGridView para listar usuários - Panel Usuarios
+            dgvUsuarios = new DataGridView { Size = new Size(360, 450), Location = new Point(10, 10), ReadOnly = true, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill, Dock = DockStyle.Fill };
+            dgvUsuarios.SelectionChanged += (s, e) => PreencherFormulario();
 
-            this.Controls.AddRange(new Control[] { lblNome, txtNome, lblCargo, cmbCargo, lblLogin, txtLogin, lblSenha, txtSenha, btnVoltar, btnEnviar });
-            ResizeForm(null, null);
+            panelUsuarios.Controls.AddRange([dgvUsuarios]);
+
+            // Adicionar painéis ao TableLayoutPanel
+            tableLayoutPanel.Controls.Add(panelCadastro, 0, 0); // Primeira coluna
+            tableLayoutPanel.Controls.Add(panelUsuarios, 1, 0); // Segunda coluna
+
+            // Adicionar o TableLayoutPanel ao Form
+            this.Controls.Add(tableLayoutPanel);
         }
 
-        private Label CreateLabel(string text)
-        {
-            return new Label
-            {
-                Text = text,
-                Font = new Font("Segoe UI", 12F, FontStyle.Bold),
-                AutoSize = true
-            };
-        }
+        private Label CreateLabel(string text, Point location) => new Label { Text = text, Font = new Font("Segoe UI", 12F, FontStyle.Bold), AutoSize = true, Location = location };
 
-        private TextBox CreateTextBox()
-        {
-            return new TextBox
-            {
-                Size = new Size(250, 30),
-                BackColor = Color.FromArgb(255, 255, 255),
-                Font = new Font("Segoe UI", 12F, FontStyle.Regular)
-            };
-        }
-        private ComboBox CreateComboBox()
-        {
-            return new ComboBox
-            {
-                Size = new Size(250, 30),
-                BackColor = Color.FromArgb(255, 255, 255),
-                Font = new Font("Segoe UI", 12F, FontStyle.Regular),
-                DropDownWidth = 250,
-                DropDownStyle = ComboBoxStyle.DropDownList
-            };
-        }
+        private TextBox CreateTextBox(Point location) => new TextBox { Size = new Size(250, 30), Location = location, Font = new Font("Segoe UI", 12F) };
+
+        private ComboBox CreateComboBox(Point location) => new ComboBox { Size = new Size(250, 30), Location = location, Font = new Font("Segoe UI", 12F), DropDownStyle = ComboBoxStyle.DropDownList };
 
         private Button CreateButton(string text, Color color, EventHandler onClick)
         {
-            var button = new Button
-            {
-                Text = text,
-                Size = new Size(120, 40),
-                BackColor = color,
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat,
-                Font = new Font("Segoe UI", 12F, FontStyle.Bold),
-                Cursor = Cursors.Hand,
-            };
-
-            button.Click += onClick; // Adiciona o evento de clique
-
+            var button = new Button { Text = text, Size = new Size(120, 40), BackColor = color, ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Font = new Font("Segoe UI", 12F, FontStyle.Bold), Cursor = Cursors.Hand };
+            button.Click += onClick;
             return button;
         }
 
-        private void ResizeForm(object? sender, EventArgs? e)
+        private void CarregarUsuarios()
         {
-            int centerX = this.ClientSize.Width / 2;
-            int startY = this.ClientSize.Height / 5;
-            int spacing = 50;
+            var users = crudUser.ListUser();
+            var sortedUsuarios = users.OrderBy(user => user.Id).ToList();
+            dgvUsuarios.DataSource = sortedUsuarios;
+        }
 
-            lblHeader.Location = new Point((headerPanel.Width - lblHeader.Width) / 2, 15);
-            lblNome.Location = new Point(centerX - lblNome.Width / 2, startY);
-            txtNome.Location = new Point(centerX - txtNome.Width / 2, startY + 25);
-            lblCargo.Location = new Point(centerX - lblCargo.Width / 2, startY + spacing * 2);
-            cmbCargo.Location = new Point(centerX - cmbCargo.Width / 2, startY + spacing * 2 + 25);
-            lblLogin.Location = new Point(centerX - lblLogin.Width / 2, startY + spacing * 4);
-            txtLogin.Location = new Point(centerX - txtLogin.Width / 2, startY + spacing * 4 + 25);
-            lblSenha.Location = new Point(centerX - lblSenha.Width / 2, startY + spacing * 6);
-            txtSenha.Location = new Point(centerX - txtSenha.Width / 2, startY + spacing * 6 + 25);
-            btnVoltar.Location = new Point(centerX - btnVoltar.Width - 10, startY + spacing * 8);
-            btnEnviar.Location = new Point(centerX + 10, startY + spacing * 8);
+        private void PreencherFormulario()
+        {
+            if (dgvUsuarios.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = dgvUsuarios.SelectedRows[0];
+                txtNome.Text = row.Cells["Name"].Value.ToString();
+                cmbCargo.Text = row.Cells["Role"].Value.ToString();
+                txtLogin.Text = row.Cells["Cpf"].Value.ToString();
+                txtSenha.Text = ""; // Por segurança, senha não é preenchida
+            }
+        }
+
+        private void EnviarUsuario()
+        {
+            try
+            {
+                crudUser.InsertUser(txtNome.Text, cmbCargo.Text, txtLogin.Text, txtSenha.Text);
+                MessageBox.Show("Cadastro efetuado com sucesso!", "Sucesso");
+                CarregarUsuarios();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Falha no cadastro!\n{ex.Message}", "Erro");
+            }
+        }
+
+        private void AtualizarUsuario()
+        {
+            if (dgvUsuarios.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = dgvUsuarios.SelectedRows[0];
+                int userId = Convert.ToInt32(row.Cells["Id"].Value);
+                crudUser.UpdateUser(userId, txtNome.Text, cmbCargo.Text, txtSenha.Text);
+                MessageBox.Show("Usuário atualizado com sucesso!", "Sucesso");
+                CarregarUsuarios();
+            }
+        }
+
+        private void DeletarUsuario()
+        {
+            if (dgvUsuarios.SelectedRows.Count > 0)
+            {
+                DataGridViewRow row = dgvUsuarios.SelectedRows[0];
+                int userId = Convert.ToInt32(row.Cells["Id"].Value);
+                crudUser.DeleteUser(userId);
+                MessageBox.Show("Usuário deletado com sucesso!", "Sucesso");
+                CarregarUsuarios();
+            }
         }
     }
 }

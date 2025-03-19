@@ -140,7 +140,7 @@ namespace FarmacySystem.view
 
                     "gerente" => new ManagerForm(mainForm),
                     "farmaceutico" => new FarmaceuticoForm(),
-                    "vendedor" => new SalesmanForm(),
+                    "atendente" => new SalesmanForm(),
                     _ => throw new Exception("Role not exists"),
 
                 };
