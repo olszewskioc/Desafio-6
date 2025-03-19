@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FarmacySystem.controller;
 
+
 namespace FarmacySystem.view
 {
     public class LoginForm : Form
@@ -136,10 +137,12 @@ namespace FarmacySystem.view
                 {
                     Form telaUsuario = role switch
                 {
+
                     "gerente" => new ManagerForm(mainForm),
                     "farmaceutico" => new FarmaceuticoForm(),
                     "vendedor" => new SalesmanForm(),
                     _ => throw new Exception("Role not exists"),
+
                 };
 
                 mainForm.TrocarTela(telaUsuario);

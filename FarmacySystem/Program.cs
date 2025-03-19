@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using FarmacySystem.view;
 using FarmacySystem.controller;
 
-namespace FarmacySystem.view.Farmaceutico
+namespace FarmacySystem.view
 {
     static class Program
     {
@@ -19,7 +19,7 @@ namespace FarmacySystem.view.Farmaceutico
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new ReportListForm());
         }
     }
 }
