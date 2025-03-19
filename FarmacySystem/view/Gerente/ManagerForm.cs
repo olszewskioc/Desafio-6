@@ -138,7 +138,7 @@ namespace FarmacySystem.view
         }
         private void BtnSales_Click(object sender, EventArgs e)
         {
-            mainForm.TrocarTela(new FormCadastro(mainForm));
+            mainForm.TrocarTela(new ReportListForm(mainForm));
         }
         private void BtnSupplier_Click(object sender, EventArgs e)
         {

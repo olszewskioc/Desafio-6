@@ -62,7 +62,7 @@ namespace FarmacySystem.view
             txtNome = CreateTextBox();
             lblCargo = CreateLabel("Cargo");
             cmbCargo = CreateComboBox();
-            cmbCargo.Items.AddRange(["gerente", "farmaceutico", "vendedor"]);
+            cmbCargo.Items.AddRange(["Gerente", "Farmaceutico", "Vendedor"]);
             lblLogin = CreateLabel("Login (CPF)");
             txtLogin = CreateTextBox();
             lblSenha = CreateLabel("Senha");

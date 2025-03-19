@@ -19,7 +19,7 @@ namespace FarmacySystem.view
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ReportListForm());
+            Application.Run(new MainForm());
         }
     }
 }

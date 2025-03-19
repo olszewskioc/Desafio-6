@@ -36,7 +36,7 @@ namespace FarmacySystem.view
             this.StartPosition = FormStartPosition.CenterScreen;
             this.FormBorderStyle = FormBorderStyle.Sizable;
             this.MaximizeBox = true; 
-            this.BackColor = Color.FromArgb(255, 245, 245); 
+            this.BackColor = Color.FromArgb(180, 180, 251);
 
             // Painel de Cabeçalho (roxo)
             headerPanel = new Panel

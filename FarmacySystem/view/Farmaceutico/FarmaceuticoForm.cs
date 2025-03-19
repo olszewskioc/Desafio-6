@@ -2,6 +2,7 @@
     using System.Drawing;
     using System.Windows.Forms;
     using FarmacySystem.controller;
+    using FarmacySystem.model;
     using System.Collections.Generic;
     using System.Linq;
 
