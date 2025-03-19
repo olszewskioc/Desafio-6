@@ -1,14 +1,14 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using FarmacySystem.controller;
-using System.Collections.Generic;
-using System.Linq;
-using FarmacySystem.model;
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+    using FarmacySystem.controller;
+    using System.Collections.Generic;
+    using System.Linq;
 
-namespace FarmacySystem.view
+    namespace FarmacySystem.view
 {
     public class FarmaceuticoForm : Form
+
     {
         private ListBox listBox;
         private TextBox searchBox;
