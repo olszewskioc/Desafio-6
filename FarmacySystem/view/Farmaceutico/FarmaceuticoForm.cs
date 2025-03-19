@@ -5,7 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    namespace FarmacySystem.view.Farmaceutico
+    namespace FarmacySystem.view
     {
         public class FarmaceuticoForm : Form
         {

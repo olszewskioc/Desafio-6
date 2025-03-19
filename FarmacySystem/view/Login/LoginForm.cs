@@ -136,9 +136,10 @@ namespace FarmacySystem.view
                 {
                     Form telaUsuario = role switch
                 {
-                    "gerente" => new ManagerForm(),
-                    "farmaceutico" => new FarmaceuticForm(),
-                    _ => new SalesmanForm()
+                    "gerente" => new ManagerForm(mainForm),
+                    "farmaceutico" => new FarmaceuticoForm(),
+                    "vendedor" => new SalesmanForm(),
+                    _ => throw new Exception("Role not exists"),
                 };
 
                 mainForm.TrocarTela(telaUsuario);

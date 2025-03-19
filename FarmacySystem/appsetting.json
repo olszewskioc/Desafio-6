@@ -1,5 +1,5 @@
 {
     "ConnectionStrings": {
-      "PostgresConnection": "Host=localhost;Database=Desafio6;Username=postgres;Password=Oliveira@87185"
+      "PostgresConnection": "Host=localhost;Database=Pharmacy;Username=postgres;Password=olszewski"
     }
 }

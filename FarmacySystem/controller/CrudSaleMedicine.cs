@@ -9,11 +9,11 @@ namespace FarmacySystem.controller
 {
     public class CrudSaleMedicine
     {
-        public void InsertSaleMedicine(int id, int stockid, int medicineId, int quantity)
+        public void InsertSaleMedicine(int stockid, int medicineId, int quantity)
         {
             using (var db = new AppDbContext())
             {
-                db.SaleMedicines.Add(new SaleMedicine { Id = id, StockId = stockid, MedicineId = medicineId, Quantity = quantity });
+                db.SaleMedicines.Add(new SaleMedicine { StockId = stockid, MedicineId = medicineId, Quantity = quantity });
                 db.SaveChanges();
             }
         }
